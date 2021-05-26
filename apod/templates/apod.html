@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script>
+var req = new XMLHttpRequest();
+var url = "https://api.nasa.gov/planetary/apod?api_key=";
+var api_key = "DEMO_KEY";
+
+req.open("GET", url + api_key);
+req.send();
+
+req.addEventListener("load", function(){
+	if(req.status == 200 && req.readyState == 4){
+  	var response = JSON.parse(req.responseText);
+    document.getElementById("apod_title").textContent = response.title;
+    document.getElementById("apod_date").textContent = response.date;
+    document.getElementById("apod_pic").src = response.hdurl;
+    document.getElementById("apod_explanation").textContent = response.explanation;
+  }
+})
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'apod' %}">Astro Web</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+         
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'apod' %}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'response_form' %}">Feedback Form</a>
+            </li>
+          </ul>
+        </div>
+    </div>
+
+</nav>
+<hr>
+<h1 style="text-align:center">NASA Astronomy Picture of the Day</h1>
+<hr>
+<h2 id="apod_title" style="text-align:center"></h2>
+<hr>
+<div class="container">
+<div class="row">
+    <div class="col-md-8">
+        <img id="apod_pic" src="" alt="NASA APOD" width="100%">
+    </div>
+    <div class="col-md-4">
+        <h5>Date: <span id="apod_date"></span></h5>
+        <br>
+        <h5>Explanation:</h5>
+        <p id="apod_explanation"></p>
+	<h5>Credits: <a href="https://apod.nasa.gov/apod/astropix.html">NASA APOD Page</a></h5>
+        <br>
+    </div>
+</div>
+</div>
+</body>
+</html>
